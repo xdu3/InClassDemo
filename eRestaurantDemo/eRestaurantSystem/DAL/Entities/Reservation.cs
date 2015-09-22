@@ -17,11 +17,18 @@ namespace eRestaurantSystem.DAL.Entities
     {
         [Key]
         public int ReservationID { get; set; }
+        [Required]
+        [StringLength(30,MinimumLength=5)]
         public string CustomerName { get; set; }
         public DateTime ReservationData { get; set; }
+        [Required,Range(1,16)]
         public int NameInParty { get; set; }
+        [StringLength(15)]
         public string ContactPhone { get; set; }
-        public string ReservationStatus { get; set; }
+        [Required]
+        [StringLength(1)]
+        public string ReservationStatus { get; set; }        
+        [StringLength(1)]
         public string EventCode { get; set; }
 
         //Navigation properties
