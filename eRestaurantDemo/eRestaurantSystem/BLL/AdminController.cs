@@ -26,10 +26,25 @@ namespace eRestaurantSystem.BLL
             using (var context = new eRestaurantContext())//using is transaction 
             {
                 //method syntax
-                return context.SpecialEvents.OrderBy(x => x.Description).ToList();
-
+                //return context.SpecialEvents.OrderBy(x => x.Description).ToList();
+                var results = from item in context.SpecialEvents
+                              orderby item.Description
+                              select item;
+                return results.ToList();
             }
         }
-
+        [DataObjectMethod(DataObjectMethodType.Select, false)]//let user have to pick the method
+        public List<Reservation> GetReservationsByEventCode(string eventcode)//always lower case.
+        {            
+            using (var context = new eRestaurantContext())//using is transaction 
+            {
+                //query syntax
+                var results = from item in context.Reservations
+                              where item.EventCode.Equals(eventcode)
+                              orderby item.CustomerName, item.ReservationDate
+                              select item;
+                return results.ToList();
+            }
+        }
     }
 }

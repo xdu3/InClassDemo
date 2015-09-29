@@ -20,9 +20,9 @@ namespace eRestaurantSystem.DAL.Entities
         [Required]
         [StringLength(30,MinimumLength=5)]
         public string CustomerName { get; set; }
-        public DateTime ReservationData { get; set; }
+        public DateTime ReservationDate { get; set; }
         [Required,Range(1,16)]
-        public int NameInParty { get; set; }
+        public int NumberInParty { get; set; }
         [StringLength(15)]
         public string ContactPhone { get; set; }
         [Required]

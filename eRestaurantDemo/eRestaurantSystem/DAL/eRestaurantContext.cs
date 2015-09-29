@@ -21,7 +21,7 @@ namespace eRestaurantSystem.DAL
     {
         //create a constructor which will test the connention string 
         // name to the DbContext 
-        public eRestaurantContext() : base("name-EatIn")
+        public eRestaurantContext() : base("name=EatIn")
         {
 
         }
