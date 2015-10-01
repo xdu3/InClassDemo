@@ -51,7 +51,8 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/SampleWeb/SpecialEventAdmin">SpecialEvents</a></li>
+                        <li><a runat="server" href="~/SampleWeb/SpecialEventAdmin">Special Events</a></li>
+                        <li><a runat="server" href="~/SampleWeb/ListView">List View Display</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>

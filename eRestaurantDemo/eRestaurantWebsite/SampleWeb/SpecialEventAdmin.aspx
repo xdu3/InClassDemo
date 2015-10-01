@@ -45,8 +45,31 @@
 
         </tr>
         <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td colspan="2" align="center">
+                <asp:DetailsView ID="ReservationListDV" runat="server" AllowPaging="True" AutoGenerateRows="False" DataSourceID="ODSReservations" >
+                    <EmptyDataTemplate>
+                        No data to display at this time
+                    </EmptyDataTemplate>
+                    <Fields>
+                        <asp:BoundField DataField="CustomerName" HeaderText="Name">
+                        <HeaderStyle HorizontalAlign="Right" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="ReservationDate" DataFormatString="{0: MMM DD, YYYY h:mm tt}" HeaderText="Date">
+                        <FooterStyle HorizontalAlign="Right" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="NumberInParty" HeaderText="Size">
+                        <FooterStyle HorizontalAlign="Right" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="NumberInParty" HeaderText="Phone">
+                        <FooterStyle HorizontalAlign="Right" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="ReservationStatus" HeaderText="Status">
+                        <FooterStyle HorizontalAlign="Right" />
+                        </asp:BoundField>
+                    </Fields>
+
+                </asp:DetailsView>
+            </td>
         </tr>
         <tr>
             <td>&nbsp;</td>
