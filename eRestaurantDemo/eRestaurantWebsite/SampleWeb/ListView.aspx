@@ -19,14 +19,12 @@
                 <asp:ListView ID="ReservationList" runat="server" DataSourceID="ODSReservations">
                     <AlternatingItemTemplate>
                         <tr style="background-color:#FFF8DC;">
-                            <td>
-                                <asp:Label ID="ReservationIDLabel" runat="server" Text='<%# Eval("ReservationID") %>' />
-                            </td>
+                           
                             <td>
                                 <asp:Label ID="CustomerNameLabel" runat="server" Text='<%# Eval("CustomerName") %>' />
                             </td>
-                            <td>
-                                <asp:Label ID="ReservationDateLabel" runat="server" Text='<%# Eval("ReservationDate") %>' />
+                            <td align="center">
+                                <asp:Label ID="ReservationDateLabel" runat="server" Text='<%# Eval("ReservationDate","{0:MMM dd,yyyy h:mm tt}") %>' />
                             </td>
                             <td>
                                 <asp:Label ID="NumberInPartyLabel" runat="server" Text='<%# Eval("NumberInParty") %>' />
@@ -48,16 +46,14 @@
                         </table>
                     </EmptyDataTemplate>
                     
-                    <ItemTemplate>
+                    <ItemTemplate >
                         <tr style="background-color:#DCDCDC;color: #000000;">
-                            <td>
-                                <asp:Label ID="ReservationIDLabel" runat="server" Text='<%# Eval("ReservationID") %>' />
-                            </td>
+                            
                             <td>
                                 <asp:Label ID="CustomerNameLabel" runat="server" Text='<%# Eval("CustomerName") %>' />
                             </td>
-                            <td>
-                                <asp:Label ID="ReservationDateLabel" runat="server" Text='<%# Eval("ReservationDate") %>' />
+                            <td align="center">
+                                <asp:Label ID="ReservationDateLabel" runat="server" Text='<%# Eval("ReservationDate","{0:MMM dd,yyyy h:mm tt}") %>' />
                             </td>
                             <td>
                                 <asp:Label ID="NumberInPartyLabel" runat="server" Text='<%# Eval("NumberInParty") %>' />
@@ -76,12 +72,12 @@
                                 <td runat="server">
                                     <table id="itemPlaceholderContainer" runat="server" border="1" style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;font-family: Verdana, Arial, Helvetica, sans-serif;">
                                         <tr runat="server" style="background-color:#DCDCDC;color: #000000;">
-                                            <th runat="server">ReservationID</th>
-                                            <th runat="server">CustomerName</th>
-                                            <th runat="server">ReservationDate</th>
-                                            <th runat="server">NumberInParty</th>
-                                            <th runat="server">ContactPhone</th>
-                                            <th runat="server">ReservationStatus</th>
+                                            
+                                            <th runat="server">Name</th>
+                                            <th runat="server">Date</th>
+                                            <th runat="server">Size</th>
+                                            <th runat="server">Phone</th>
+                                            <th runat="server">Status</th>
                                         </tr>
                                         <tr id="itemPlaceholder" runat="server">
                                         </tr>
