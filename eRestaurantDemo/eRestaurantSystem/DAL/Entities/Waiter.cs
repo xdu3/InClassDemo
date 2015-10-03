@@ -32,5 +32,6 @@ namespace eRestaurantSystem.DAL.Entities
 
         // Navigation Properties
         public virtual ICollection<Bill> Bills { get; set; }
+
     }
 }
