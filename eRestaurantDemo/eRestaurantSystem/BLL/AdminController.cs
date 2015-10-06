@@ -49,8 +49,8 @@ namespace eRestaurantSystem.BLL
             }
         }
 
-        [DataObjectMethod(DataObjectMethodType.Select,false)]
-        public List<ReservationByDate> GetReservtaionByDate(string reservationOnDate)
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<ReservationByDate> GetReservtaionByDate(string reservationDate)
         {
             using (var context = new eRestaurantContext())
             {
@@ -58,9 +58,9 @@ namespace eRestaurantSystem.BLL
                 // extract the year, month and dat ourselves 
                 //out of the passed paramater value
 
-                var theYear = (DateTime.Parse(reservationOnDate)).Year;
-                var theMonth = (DateTime.Parse(reservationOnDate)).Month;
-                var theDay = (DateTime.Parse(reservationOnDate)).Day;
+                int theYear = (DateTime.Parse(reservationDate).Year);
+                int theMonth = (DateTime.Parse(reservationDate).Month);
+                int theDay = (DateTime.Parse(reservationDate).Day);
 
                 var result = from eventItem in context.SpecialEvents
                              orderby eventItem.Description
@@ -81,6 +81,31 @@ namespace eRestaurantSystem.BLL
                                                 }
                              };
                 return result.ToList();
+
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<MenuCategoryItems> MenuCategoryItems_List ()
+        {
+            using (var context = new eRestaurantContext())
+            {
+                
+                var results = from menuItem in context.MenuCategories
+                             orderby menuItem.Description
+                             select new MenuCategoryItems()// a new instance for each specialevent row on the table.
+                             {
+                                 Description = menuItem.Description,
+                                 MenuItems = from row in menuItem.MenuItems                                              
+                                                select new MenuItem()//a new for each reservation of a particlar specialEvent code
+                                                {
+                                                    Description = row.Description,
+                                                    Price = row.CurrentPrice,
+                                                    Calories = row.Calories,
+                                                    Comment = row.Comment
+                                                }
+                             };
+                return results.ToList();
 
             }
         }
