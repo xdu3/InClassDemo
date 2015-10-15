@@ -19,6 +19,9 @@ namespace eRestaurantSystem.BLL
     [DataObject]
     public class AdminController
     {
+        #region Queries
+        
+        
         [DataObjectMethod(DataObjectMethodType.Select, false)]//let user have to pick the method
         public List<SpecialEvent> SpecialEvents_List()
         {
@@ -109,5 +112,48 @@ namespace eRestaurantSystem.BLL
 
             }
         }
+#endregion
+        #region Add, Update, Delete of CRUD for CQRS
+
+        [DataObjectMethod(DataObjectMethodType.Insert,false)]
+        public void SpecialEvent_Add(SpecialEvent item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                SpecialEvent added = null;
+                added = context.SpecialEvents.Add(item);
+                //comment is not used until it is actully save
+                context.SaveChanges();
+            }
+
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Update, false)]
+        public void SpecialEvent_Update(SpecialEvent item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                context.Entry<SpecialEvent>(context.SpecialEvents.Attach(item)).State = System.Data.Entity.EntityState.Modified;
+                
+                context.SaveChanges();
+            }
+
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public void SpecialEvent_Delete(SpecialEvent item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                SpecialEvent existing = context.SpecialEvents.Find(item.EventCode);
+                context.SpecialEvents.Remove(existing);
+
+                context.SaveChanges();
+            }
+
+        }
+
+        #endregion
     }
+        
 }
