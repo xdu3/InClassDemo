@@ -1,12 +1,22 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="SpecialEventAdmin.aspx.cs" Inherits="CommonPages_SpecialEventAdmin" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master"
+     AutoEventWireup="true" CodeFile="SpecialEventAdmin.aspx.cs"
+     Inherits="CommonPages_SpecialEventAdmin" %>
+
+<%@ Register Src="~/UserControl/MessageUserControl.ascx" 
+    TagPrefix="uc1"
+     TagName="MessageUserControl" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <h1>asdf</h1>
     <h1>SpecialEvents CRUD using ListView and ODS</h1>
 
-    
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
 
-    <asp:ListView ID="SpecialEventsCRUD" runat="server" DataSourceID="ODSSpecialEvent" InsertItemPosition="LastItem" DataKeyNames="EventCode">
+    <asp:ListView ID="SpecialEventsCRUD"
+         runat="server" DataSourceID="ODSSpecialEvent"
+         InsertItemPosition="LastItem"
+         DataKeyNames="EventCode">
         <AlternatingItemTemplate>
             <tr style="background-color: #FFFFFF;color: #284775;">
                 <td>
@@ -135,7 +145,18 @@
         </SelectedItemTemplate>
 
     </asp:ListView>
-    <asp:ObjectDataSource ID="ODSSpecialEvent" runat="server" DataObjectTypeName="eRestaurantSystem.DAL.Entities.SpecialEvent" DeleteMethod="SpecialEvent_Delete" InsertMethod="SpecialEvent_Add" OldValuesParameterFormatString="original_{0}" SelectMethod="SpecialEvents_List" TypeName="eRestaurantSystem.BLL.AdminController" UpdateMethod="SpecialEvent_Update">
+    <asp:ObjectDataSource ID="ODSSpecialEvent" runat="server"
+         DataObjectTypeName="eRestaurantSystem.DAL.Entities.SpecialEvent"
+         DeleteMethod="SpecialEvent_Delete"
+         InsertMethod="SpecialEvent_Add"
+         OldValuesParameterFormatString="original_{0}"
+         SelectMethod="SpecialEvents_List"
+         TypeName="eRestaurantSystem.BLL.AdminController"
+         UpdateMethod="SpecialEvent_Update"
+         OnDeleted="CheckForException"
+         OnInserted="CheckForException"
+         OnSelected="CheckForException"
+         OnUpdated="CheckForException">
 
     </asp:ObjectDataSource>
 </asp:Content>

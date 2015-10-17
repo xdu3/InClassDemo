@@ -11,4 +11,10 @@ public partial class CommonPages_SpecialEventAdmin : System.Web.UI.Page
     {
 
     }
+    protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
+    {
+        MessageUserControl.HandleDataBoundException(e);
+
+    }
+
 }

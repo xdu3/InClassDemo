@@ -154,6 +154,79 @@ namespace eRestaurantSystem.BLL
         }
 
         #endregion
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]//let user have to pick the method
+        public List<Waiter> Waiters_List()
+        {
+            //connect to our DbContext class in the DAL 
+            // create a instance of the class
+            //we will use the transaction to hold our query
+            using (var context = new eRestaurantContext())//using is transaction 
+            {
+                //method syntax
+                //return context.SpecialEvents.OrderBy(x => x.Description).ToList();
+                var results = from item in context.Waiters
+                              orderby item.LastName, item.FirstName
+                              select item;
+                return results.ToList();//none, 1 or more
+            }
+        }
+
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]//let user have to pick the method
+        public Waiter GetWaiterByID(int waiterID)
+        {
+            //connect to our DbContext class in the DAL 
+            // create a instance of the class
+            //we will use the transaction to hold our query
+            using (var context = new eRestaurantContext())//using is transaction 
+            {
+                //method syntax
+                //return context.SpecialEvents.OrderBy(x => x.Description).ToList();
+                var results = from item in context.Waiters
+                              where item.WaiterID==waiterID
+                              select item;
+                return results.FirstOrDefault();//one row at most
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
+        public void Waiter_Add(Waiter item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                Waiter added = null;
+                added = context.Waiters.Add(item);
+                //comment is not used until it is actully save
+                context.SaveChanges();
+            }
+
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Update, false)]
+        public void Waiter_Update(Waiter item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                context.Entry<Waiter>(context.Waiters.Attach(item)).State = System.Data.Entity.EntityState.Modified;
+
+                context.SaveChanges();
+            }
+
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public void Waiter_Delete(Waiter item)
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                Waiter existing = context.Waiters.Find(item.WaiterID);
+                context.Waiters.Remove(existing);
+
+                context.SaveChanges();
+            }
+
+        }
     }
         
 }

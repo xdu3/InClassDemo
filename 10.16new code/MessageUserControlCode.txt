@@ -1,4 +1,4 @@
-﻿using EatIn.UI;
+using EatIn.UI;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -6,9 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
-
-public partial class UserControl_MessageUserControl : System.Web.UI.UserControl
+public partial class UserControls_MessageUserControl : System.Web.UI.UserControl
 {
     #region String Constants
     private const string STR_TITLE_GeneralErrors = "Processing Error";
