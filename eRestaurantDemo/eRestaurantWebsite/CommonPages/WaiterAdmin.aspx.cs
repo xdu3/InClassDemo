@@ -16,7 +16,10 @@ public partial class CommonPages_WaiterAdmin : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!Page.IsPostBack)
+        {
+            HireDateTextBox.Text = DateTime.Today.ToShortDateString();
+        }
     }
     protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
     {
@@ -64,5 +67,76 @@ public partial class CommonPages_WaiterAdmin : System.Web.UI.Page
             ReleaseDateTextBox.Text = "";
         }
 
+    }
+    protected void WaiterInsert_Click(object sender, EventArgs e)
+    {
+        //inline version of using MessageUserControl
+        MessageUserControl.TryRun
+            (
+                ()=>
+                    //remainder of the code is waht would have gone in the 
+                    //external method of (processRequest(MethodNum))
+                {
+                    Waiter item = new Waiter();
+                    item.FirstName = FirstNameTextBox.Text;
+                    item.LastName = LastNameTextBox.Text;
+                    item.Address = AddressTextBox.Text;
+                    item.Phone = PhoneTextBox.Text;
+                    item.HireDate = DateTime.Parse(HireDateTextBox.Text);
+
+                    if(string.IsNullOrEmpty(ReleaseDateTextBox.Text))
+                    {
+                        item.ReleaseDate = null;
+                    }
+                    else
+                    {
+                        item.ReleaseDate = DateTime.Parse(ReleaseDateTextBox.Text);
+                    }
+                    AdminController sysmgr = new AdminController();
+                    IDLabel.Text = sysmgr.Waiters_Add(item).ToString();
+                    MessageUserControl.ShowInfo("Waiter added.");
+                    WaiterList.DataBind();
+                }
+                
+            );
+    }
+    protected void WaiterUpdate_Click(object sender, EventArgs e)
+    {
+        if (string.IsNullOrEmpty(IDLabel.Text))
+        {
+            MessageUserControl.ShowInfo("Please select a waiter first before updating.");
+        }
+        else
+        {
+            //standard update process
+            MessageUserControl.TryRun
+           (
+               () =>
+               //remainder of the code is waht would have gone in the 
+               //external method of (processRequest(MethodNum))
+               {
+                   Waiter item = new Waiter();
+                   item.WaiterID = int.Parse(IDLabel.Text);
+                   item.FirstName = FirstNameTextBox.Text;
+                   item.LastName = LastNameTextBox.Text;
+                   item.Address = AddressTextBox.Text;
+                   item.Phone = PhoneTextBox.Text;
+                   item.HireDate = DateTime.Parse(HireDateTextBox.Text);
+
+                   if (string.IsNullOrEmpty(ReleaseDateTextBox.Text))
+                   {
+                       item.ReleaseDate = null;
+                   }
+                   else
+                   {
+                       item.ReleaseDate = DateTime.Parse(ReleaseDateTextBox.Text);
+                   }
+                   AdminController sysmgr = new AdminController();
+                   sysmgr.Waiter_Update(item);
+                   MessageUserControl.ShowInfo("Waiter updated.");
+                   WaiterList.DataBind();
+               }
+           );
+        }
     }
 }
