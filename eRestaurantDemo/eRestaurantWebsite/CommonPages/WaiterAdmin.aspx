@@ -14,8 +14,8 @@
     <br />
     <asp:Label ID="Label1" runat="server" Text="Waiter Name"></asp:Label>
     &nbsp;
-    <asp:DropDownList ID="WaiterList" runat="server" AppendDataBoundItems="True" DataSourceID="WaiterObjectDataSource" DataTextField="FullName" DataValueField="WaiterID" Width="329px">
-        <asp:ListItem Value="0">Select a watier</asp:ListItem>
+    <asp:DropDownList ID="WaiterList" runat="server" DataSourceID="WaiterObjectDataSource" DataTextField="FullName" DataValueField="WaiterID" Width="329px">
+        
     </asp:DropDownList>
     &nbsp;<asp:LinkButton ID="FetchWaiter" runat="server" OnClick="FetchWaiter_Click">Fetch Waiter</asp:LinkButton>
     <br />

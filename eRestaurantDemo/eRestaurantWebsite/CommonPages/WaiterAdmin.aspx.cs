@@ -19,6 +19,7 @@ public partial class CommonPages_WaiterAdmin : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             HireDateTextBox.Text = DateTime.Today.ToShortDateString();
+            RefreshWaiterList("0");
         }
     }
     protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
@@ -95,10 +96,19 @@ public partial class CommonPages_WaiterAdmin : System.Web.UI.Page
                     AdminController sysmgr = new AdminController();
                     IDLabel.Text = sysmgr.Waiters_Add(item).ToString();
                     MessageUserControl.ShowInfo("Waiter added.");
-                    WaiterList.DataBind();
+                    RefreshWaiterList(IDLabel.Text);
                 }
                 
             );
+    }
+    protected void RefreshWaiterList(string selectedValue)
+    {
+        //force the re-execution of the quary for the drop down list
+        WaiterList.DataBind();
+        //insert the prompt line into the drop down list data
+        WaiterList.Items.Insert(0, "Select a waiter.");
+        //position the waiterlist to the desired row representing the waiter
+        WaiterList.SelectedValue = selectedValue;
     }
     protected void WaiterUpdate_Click(object sender, EventArgs e)
     {
@@ -134,7 +144,7 @@ public partial class CommonPages_WaiterAdmin : System.Web.UI.Page
                    AdminController sysmgr = new AdminController();
                    sysmgr.Waiter_Update(item);
                    MessageUserControl.ShowInfo("Waiter updated.");
-                   WaiterList.DataBind();
+                   RefreshWaiterList(IDLabel.Text);
                }
            );
         }

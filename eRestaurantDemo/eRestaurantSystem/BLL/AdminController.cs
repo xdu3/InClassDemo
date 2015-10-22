@@ -20,8 +20,8 @@ namespace eRestaurantSystem.BLL
     public class AdminController
     {
         #region Queries
-        
-        
+
+
         [DataObjectMethod(DataObjectMethodType.Select, false)]//let user have to pick the method
         public List<SpecialEvent> SpecialEvents_List()
         {
@@ -40,7 +40,7 @@ namespace eRestaurantSystem.BLL
         }
         [DataObjectMethod(DataObjectMethodType.Select, false)]//let user have to pick the method
         public List<Reservation> GetReservationsByEventCode(string eventcode)//always lower case.
-        {            
+        {
             using (var context = new eRestaurantContext())//using is transaction 
             {
                 //query syntax
@@ -89,33 +89,33 @@ namespace eRestaurantSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<MenuCategoryItems> MenuCategoryItems_List ()
+        public List<MenuCategoryItems> MenuCategoryItems_List()
         {
             using (var context = new eRestaurantContext())
             {
-                
+
                 var results = from menuItem in context.MenuCategories
-                             orderby menuItem.Description
-                             select new MenuCategoryItems()// a new instance for each specialevent row on the table.
-                             {
-                                 Description = menuItem.Description,
-                                 MenuItems = from row in menuItem.MenuItems                                              
-                                                select new MenuItem()//a new for each reservation of a particlar specialEvent code
-                                                {
-                                                    Description = row.Description,
-                                                    Price = row.CurrentPrice,
-                                                    Calories = row.Calories,
-                                                    Comment = row.Comment
-                                                }
-                             };
+                              orderby menuItem.Description
+                              select new MenuCategoryItems()// a new instance for each specialevent row on the table.
+                              {
+                                  Description = menuItem.Description,
+                                  MenuItems = from row in menuItem.MenuItems
+                                              select new MenuItem()//a new for each reservation of a particlar specialEvent code
+                                              {
+                                                  Description = row.Description,
+                                                  Price = row.CurrentPrice,
+                                                  Calories = row.Calories,
+                                                  Comment = row.Comment
+                                              }
+                              };
                 return results.ToList();
 
             }
         }
-#endregion
+        #endregion
         #region Add, Update, Delete of CRUD for CQRS
 
-        [DataObjectMethod(DataObjectMethodType.Insert,false)]
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
         public void SpecialEvent_Add(SpecialEvent item)
         {
             using (eRestaurantContext context = new eRestaurantContext())
@@ -134,7 +134,7 @@ namespace eRestaurantSystem.BLL
             using (eRestaurantContext context = new eRestaurantContext())
             {
                 context.Entry<SpecialEvent>(context.SpecialEvents.Attach(item)).State = System.Data.Entity.EntityState.Modified;
-                
+
                 context.SaveChanges();
             }
 
@@ -155,6 +155,7 @@ namespace eRestaurantSystem.BLL
 
         #endregion
 
+        #region
         [DataObjectMethod(DataObjectMethodType.Select, false)]//let user have to pick the method
         public List<Waiter> Waiters_List()
         {
@@ -184,7 +185,7 @@ namespace eRestaurantSystem.BLL
                 //method syntax
                 //return context.SpecialEvents.OrderBy(x => x.Description).ToList();
                 var results = from item in context.Waiters
-                              where item.WaiterID==waiterID
+                              where item.WaiterID == waiterID
                               select item;
                 return results.FirstOrDefault();//one row at most
             }
@@ -199,7 +200,7 @@ namespace eRestaurantSystem.BLL
                 added = context.Waiters.Add(item);
                 //comment is not used until it is actully save
                 context.SaveChanges();
-                
+
                 //the waiter instence added contains the newly inserted 
                 //record to sql including the genrated pkey value
                 return added.WaiterID;
@@ -231,6 +232,28 @@ namespace eRestaurantSystem.BLL
             }
 
         }
+
+        #endregion
+
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<CategoryMenuItems> GetReportCategoryMenuItems()
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                var results = from cat in context.Items
+                              orderby cat.Category.Description, cat.Description
+                              select new CategoryMenuItems
+                              {
+                                  CategoryDescription = cat.Category.Description,
+                                  ItemDescription = cat.Description,
+                                  Price = cat.CurrentPrice,
+                                  Calories = cat.Calories,
+                                  Comment = cat.Comment
+                              };
+
+                return results.ToList(); // this was .Dump() in Linqpad
+            }
+        }
     }
-        
 }
