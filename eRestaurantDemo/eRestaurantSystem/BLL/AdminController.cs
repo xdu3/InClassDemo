@@ -255,5 +255,33 @@ namespace eRestaurantSystem.BLL
                 return results.ToList(); // this was .Dump() in Linqpad
             }
         }
+        [DataObjectMethod(DataObjectMethodType.Select,false)]
+        public List<WaiterBilling> GetWaiterBillingReport()
+        {
+            using (eRestaurantContext context = new eRestaurantContext())
+            {
+                var results =from abillrow in context.Bills
+                                    where abillrow.BillDate.Month == 5
+                                    orderby abillrow.BillDate,
+                                            abillrow.Waiter.LastName,
+                                            abillrow.Waiter.FirstName
+                             select new WaiterBilling()
+                                        {
+                                            BillDate = abillrow.BillDate.Year
+                                                        +"/"+
+                                                        abillrow.BillDate.Month
+                                                        + "/" +
+                                                        abillrow.BillDate.Day,
+                                            WaiterName = abillrow.Waiter.LastName + ", " + abillrow.Waiter.FirstName,
+                                            BillID = abillrow.BillID,
+                                            BillTotal = abillrow.Items.Sum(eachbillitemrow =>
+                                                eachbillitemrow.Quantity * eachbillitemrow.SalePrice),
+                                            PartySize = abillrow.NumberInParty,
+                                            Contact = abillrow.Reservation.CustomerName
+                                        };
+
+                return results.ToList();
+            }
+        }
     }
 }
