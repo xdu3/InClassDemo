@@ -93,6 +93,10 @@
                             <asp:MenuItem Text="SpcialEventAdmin" NavigateUrl="~/Reports/CategoryMenuItems.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="WaiterAdmin" NavigateUrl="~/Reports/WaiterBillingReport.aspx"></asp:MenuItem>
                         </asp:MenuItem>
+                        <asp:MenuItem Text="UXPage" Value="DDMenu">
+                            <asp:MenuItem Text="FrontDesk" NavigateUrl="~/UXPage/FrontDesk.aspx"></asp:MenuItem>
+                            
+                        </asp:MenuItem>
                         <asp:MenuItem Text="About Us" NavigateUrl="~/About.aspx"></asp:MenuItem>
                          <asp:MenuItem Text="Contact Us" NavigateUrl="~/Contact.aspx"></asp:MenuItem>
                     </Items>
