@@ -15,6 +15,7 @@ namespace eRestaurantSystem.DAL.Entities
 {
     public class Bill
     {
+        [Key]
         public int BillID { get; set; }
         public DateTime BillDate { get; set; }
         public DateTime? OrderPlaced { get; set; }
