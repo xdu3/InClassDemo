@@ -12,6 +12,9 @@
             </DataSources>
         </LocalReport>
     </rsweb:ReportViewer>
-    <asp:ObjectDataSource ID="ODSReport" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="GetReportCategoryMenuItems" TypeName="eRestaurantSystem.BLL.AdminController"></asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="ODSReport"
+         runat="server" OldValuesParameterFormatString="original_{0}"
+         SelectMethod="GetReportCategoryMenuItems"
+         TypeName="eRestaurantSystem.BLL.AdminController"></asp:ObjectDataSource>
 </asp:Content>
 

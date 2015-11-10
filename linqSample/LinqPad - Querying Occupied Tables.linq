@@ -56,3 +56,38 @@ var step2 = from dataRow in step1.ToList() // .ToList() forces the first result 
                                 }
             };
 step2.Dump();
+
+// Step 3 - Get just the first CommonBilling item
+//         (presumes no overlaps can occur - i.e., two groups at the same table at the same time)
+var step3 = from data in step2.ToList()
+            select new
+            {
+                Table = data.Table,
+                Seating = data.Seating,
+                Taken = data.CommonBilling.Count() > 0,
+                // .FirstOrDefault() is effectively "flattening" my collection of 1 item into a 
+                // single object whose properties I can get in step 4 using the dot (.) operator
+                CommonBilling = data.CommonBilling.FirstOrDefault()
+            };
+step3.Dump();
+
+
+var step4 = from data in step3
+            select new // SeatingSummary() // the DTO class to use in my BLL
+            {
+                Table = data.Table,
+                Seating = data.Seating,
+                Taken = data.Taken,
+                // use a ternary expression to conditionally get the bill id (if it exists)
+                BillID = data.Taken ?               // if(data.Taken)
+                         data.CommonBilling.BillID  // value to use if true
+                       : (int?) null,               // value to use if false
+                BillTotal = data.Taken ? 
+                            data.CommonBilling.BillTotal : (decimal?) null,
+                Waiter = data.Taken ? data.CommonBilling.Waiter : (string) null,
+                ReservationName = data.Taken ?
+                                  (data.CommonBilling.Reservation != null ?
+                                   data.CommonBilling.Reservation.CustomerName : (string) null)
+                                : (string) null
+            };
+step4.Dump();

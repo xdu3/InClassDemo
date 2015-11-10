@@ -16,7 +16,9 @@
     <rsweb:ReportViewer ID="WaiterBillingReportViewer" runat="server" Font-Names="Verdana" Font-Size="8pt" Height="800px" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" Width="600px">
         <LocalReport ReportPath="Reports\WaiterBilling.rdlc">
             <DataSources>
-                <rsweb:ReportDataSource DataSourceId="WaiterBillingReportObjectDataSource" Name="WaiterBillingDS" />
+                <rsweb:ReportDataSource
+                     DataSourceId="WaiterBillingReportObjectDataSource" 
+                    Name="WaiterBillingDS" />
             </DataSources>
         </LocalReport>
     </rsweb:ReportViewer>
